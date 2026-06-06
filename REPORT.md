@@ -33,3 +33,44 @@ create mode 100644 README.md
 [master 6e81afc] added sources
 
 4 files changed, 33 insertions(+)
+
+
+`cat > formatter_lib/CMakeLists.txt <<EOF`
+
+`cat > formatter_ex_lib/CMakeLists.txt <<EOF`
+
+
+`cat > hello_world_application/CMakeLists.txt <<EOF`
+
+
+`cat > solver_lib/CMakeLists.txt <<EOF`
+
+
+`cat > solver_application/CMakeLists.txt <<EOF`
+
+
+`cat > CMakeLists.txt <<EOF`
+
+
+`git add .`
+
+
+`git commit -m "add CMakeLists.txt for all modules"`
+
+*Вывод:*
+
+[master 7e76299] add CMakeLists.txt for all modules
+
+6 files changed, 52 insertions(+)
+
+create mode 100644 CMakeLists.txt
+
+create mode 100644 formatter_ex_lib/CMakeLists.txt
+
+create mode 100644 formatter_lib/CMakeLists.txt
+
+create mode 100644 hello_world_application/CMakeLists.txt
+
+create mode 100644 solver_application/CMakeLists.txt
+
+create mode 100644 solver_lib/CMakeLists.txt
