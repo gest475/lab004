@@ -17,7 +17,8 @@ export GITHUB_TOKEN=ghp_6Rgd0JgVHDZQ1N4zK9VE16a8Nh5DFQ4ZBPVQ
 `\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles`
 
 **Вывод:**
-``` on ignore dotfiles mode.
+```
+Turning on ignore dotfiles mode.
 Downloading https://github.com/rvm/rvm/archive/master.tar.gz
 Installing RVM to /home/maryu/.rvm/
 Installation of RVM in /home/maryu/.rvm/ is almost complete.
@@ -73,17 +74,19 @@ Receiving objects: 100% (48/48), 10.18 KiB | 297.00 KiB/s, done.
 `cat > .travis.yml <<EOF`
 ```
 language: cpp
+
 script:
-cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-cmake --build _build
-cmake --build _build --target install
+- cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+- cmake --build _build
+- cmake --build _build --target install
+
 addons:
-apt:
-sources:
-george-edison55-precise-backports
-packages:
-cmake
-cmake-data
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
 EOF
 ```
 
@@ -91,7 +94,6 @@ EOF
 
 **Вывод:**
 ```
-yaml
 language: cpp
 
 script:
@@ -150,7 +152,8 @@ To set up a subscription, please visit app.travis-ci.com.
 
 `mkdir -p .github/workflows`
 
-```cat > .github/workflows/ci.yml <<'EOF'
+`cat > .github/workflows/ci.yml <<'EOF'
+```
 name: CI
 
 on:
@@ -176,4 +179,116 @@ run: cmake --build _build
 name: Install
 run: cmake --build _build --target install
 EOF
+```
+`cat .github/workflows/ci.yml`
+
+**Вывод:**
+```
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Configure CMake
+      run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+    
+    - name: Build
+      run: cmake --build _build
+    
+    - name: Install
+      run: cmake --build _build --target install
+```
+## 11. Создание README.md и добавление бейджа
+
+`echo '# lab004' > README.md`
+
+`echo '' >> README.md`
+
+`echo '[![CI](https://github.com/gest475/lab004/actions/workflows/ci.yml/badge.svg)](https://github.com/gest475/lab004/actions/workflows/ci.yml)' >> README.md`
+
+`cat README.md`
+
+**Вывод:**
+```markdown
+# lab004
+
+[![CI](https://github.com/gest475/lab004/actions/workflows/ci.yml/badge.svg)](https://github.com/gest475/lab004/actions/workflows/ci.yml)
+```
+
+## 12. Установка GitHub CLI и авторизация
+
+`sudo apt install gh -y`
+
+`gh --version`
+
+**Вывод:**
+```
+gh version 2.45.0 (2025-07-18 Ubuntu 2.45.0-1ubuntu0.3)
+```
+
+`unset GITHUB_TOKEN`
+
+`gh auth login --web`
+
+**Вывод:**
+```
+First copy your one-time code: 1C90-0E7A
+Authentication complete.
+Logged in as gest475
+```
+
+## 13. Создание репозитория на GitHub
+
+`gh repo create lab004 --public --source=. --remote=origin --push`
+
+**Вывод:**
+```
+Created repository gest475/lab004 on GitHub
+https://github.com/gest475/lab004
+```
+
+## 14. Фиксация изменений и отправка на GitHub
+
+`git add .travis.yml .github/workflows/ci.yml README.md`
+
+`git commit -m "added Travis CI and GitHub Actions configuration"`
+
+**Вывод:**
+```
+[main 100fdf7] added Travis CI and GitHub Actions configuration
+1 file changed, 14 insertions(+)
+create mode 100644 .travis.yml
+```
+
+`git push -u origin main`
+
+**Вывод:**
+```
+Enumerating objects: 51, done.
+Counting objects: 100% (51/51), done.
+Writing objects: 100% (51/51), 10.56 KiB | 3.52 MiB/s, done.
+Total 51 (delta 18), reused 47 (delta 17), pack-reused 0
+To https://github.com/gest475/lab004
+
+[new branch] main -> main
+branch 'main' set up to track 'origin/main'.
+```
+## 15. Проверка статуса сборки GitHub Actions
+
+`gh run list --repo gest475/lab004`
+
+**Вывод:**
+```
+STATUS TITLE WORKFLOW BRANCH ID
+success added GitHub Actions CI and badge CI main 27089814029
 ```
