@@ -1,10 +1,6 @@
 name: CI
 
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -12,6 +8,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Install CMake
+      run: sudo apt update && sudo apt install cmake -y
     
     - name: Configure CMake
       run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
