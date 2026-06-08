@@ -20,3 +20,20 @@ install(TARGETS example1 RUNTIME DESTINATION bin)
 add_executable(example2 ${CMAKE_SOURCE_DIR}/examples/example2.cpp)
 target_link_libraries(example2 print)
 install(TARGETS example2 RUNTIME DESTINATION bin)
+
+# Установка библиотек
+install(TARGETS banking formatter_lib formatter_ex_lib solver_lib
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+)
+
+# Установка заголовочных файлов
+install(DIRECTORY include/ DESTINATION include
+    FILES_MATCHING PATTERN "*.h"
+)
+
+# Установка исполняемых файлов
+install(TARGETS hello_world_application solver_application
+    RUNTIME DESTINATION bin
+)
