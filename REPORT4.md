@@ -10,7 +10,7 @@
 ### 1. Настройка окружения
 ```
 export GITHUB_USERNAME=gest475
-export GITHUB_TOKEN=ghp_6Rgd0JgVHDZQ1N4zK9VE16a8Nh5DFQ4ZBPVQ
+export GITHUB_TOKEN=***
 ```
 ### 2. Установка RVM (Ruby Version Manager)
 
